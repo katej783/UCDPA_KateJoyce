@@ -1,17 +1,19 @@
 import pandas as pd
-df = pd.read_csv("goodreadsbooks.csv")
+import numpy as np
+book = pd.read_csv("GoodreadsBooks.csv", error_bad_lines=False)
 
-print(df)
+print(book.isnull().sum())
 
-print(df.isnull().sum())
+print(book.dtypes)
 
-print(df.dtypes)
+books = book.drop(columns=['isbn', 'isbn13', 'publication_date', 'publisher'], axis=1)
 
-print(df.describe())
+print(books.describe())
 
-df.replace(to_replace='J.K. Rowling/Mary GrandPré', value = 'J.K. Rowling', inplace=True)
+books.replace(to_replace='J.K. Rowling/Mary GrandPré', value='J.K. Rowling', inplace=True)
 
-print(df)
+print(books.isnull().sum())
 
+top_rated = books.sort_values('average_rating', ascending=False)
 
-
+print(top_rated)
